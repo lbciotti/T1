@@ -1,3 +1,5 @@
+from builtins import Exception, dict, list, property, str
+
 from models.paciente import Paciente
 
 
@@ -16,10 +18,11 @@ class ControladorPacientes:
                 return paciente
         return None
 
-    def incluir_paciente(self, nome: str, data_nascimento, cpf: str, celular: str) -> Paciente:
+    def incluir_paciente(self, nome: str, data_nascimento: str, cpf: str, celular: str):
         if self.buscar_paciente_por_cpf(cpf) is not None:
             raise Exception(f"Já existe um paciente cadastrado com o CPF {cpf}.")
 
+        # Correção: O construtor agora recebe os 4 parâmetros exigidos pelo Model
         novo_paciente = Paciente(nome, data_nascimento, cpf, celular)
         self.__pacientes.append(novo_paciente)
         return novo_paciente

@@ -1,3 +1,5 @@
+from builtins import Exception, dict, len, list, property, str, sum
+
 from models.clinica import Clinica
 
 

@@ -1,9 +1,12 @@
+from builtins import Exception, float, list, property, str
 from datetime import date, time
 from models.atendimento import Atendimento
 from models.procedimento import Procedimento
 from models.pagamento_pix import PagamentoPix
 from models.pagamento_cartao import PagamentoCartao
 from models.pagamento_dinheiro import PagamentoDinheiro
+from models.procedimento import Procedimento 
+
 
 
 class ControladorAtendimentos:
@@ -22,7 +25,7 @@ class ControladorAtendimentos:
 
         # Validação de Funcionamento da Clínica (Utiliza o método exato de clinica.py)
         if not clinica.esta_em_funcionamento(horario_inicio):
-            raise Exception(f"O horário {horario_inicio} está fora do expediente da clínica ({clinica.horario_abertura} às {clinica.horario_fechamento}).")
+            raise Exception("A clínica não está em funcionamento neste horário.")
 
         novo_atendimento = Atendimento(paciente, profissional, clinica, data, horario_inicio, tipo_atendimento)
         self.__atendimentos.append(novo_atendimento)
@@ -50,3 +53,10 @@ class ControladorAtendimentos:
 
         atendimento.adicionar_pagamento(pagamento)
         return pagamento
+    
+    def adicionar_procedimento_ao_atendimento(self, atendimento, descricao: str, custo: float, profissional):
+        novo_procedimento = Procedimento(descricao, custo, profissional)
+        atendimento.adicionar_procedimento(novo_procedimento)
+        return novo_procedimento
+    
+    
