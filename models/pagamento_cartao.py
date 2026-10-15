@@ -1,3 +1,4 @@
+from builtins import float, property, str, super
 from datetime import date
 from models.pagamento import Pagamento
 
