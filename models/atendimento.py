@@ -5,10 +5,10 @@ from models.clinica import Clinica
 from models.procedimento import Procedimento
 from models.pagamento import Pagamento
 
-
 class Atendimento:
-    def __init__(self, paciente: Paciente, profissional: Profissional, clinica: Clinica, 
+    def __init__(self, numero: str, paciente: Paciente, profissional: Profissional, clinica: Clinica, 
                  data: date, horario_inicio: time, tipo_atendimento: str):
+        self.__numero = numero
         self.__paciente = paciente
         self.__profissional = profissional
         self.__clinica = clinica
@@ -16,9 +16,12 @@ class Atendimento:
         self.__horario_inicio = horario_inicio
         self.__tipo_atendimento = tipo_atendimento
         
-        # Composições: listas que iniciam vazias e recebem os objetos vinculados
-        self.__procedimentos = []  # Lista de objetos Procedimento
-        self.__pagamentos = []     # Lista de objetos Pagamento (Pix, Cartao, Dinheiro)
+        self.__procedimentos = []  
+        self.__pagamentos = []     
+
+    @property
+    def numero(self) -> str:
+        return self.__numero
 
     @property
     def paciente(self) -> Paciente:
@@ -90,14 +93,11 @@ class Atendimento:
 
     @property
     def valor_total(self) -> float:
-        """Soma dinamicamente os custos de todos os procedimentos realizados no atendimento"""
         return sum(procedimento.custo for procedimento in self.__procedimentos)
 
     @property
     def total_pago(self) -> float:
-        """Soma todos os pagamentos efetuados (totais ou parciais)"""
         return sum(pagamento.valor_pago for pagamento in self.__pagamentos)
 
     def calcular_valor_restante(self) -> float:
-        """Retorna o saldo devedor pendente para quitacao do atendimento"""
         return self.valor_total - self.total_pago

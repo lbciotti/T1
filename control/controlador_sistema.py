@@ -1,12 +1,9 @@
-from builtins import print, property
-
 from control.controlador_pacientes import ControladorPacientes
 from control.controlador_profissionais import ControladorProfissionais
 from control.controlador_clinicas import ControladorClinicas
 from control.controlador_atendimentos import ControladorAtendimentos
 from control.controlador_relatorios import ControladorRelatorios
 from view.tela_principal import TelaPrincipal
-
 
 class ControladorSistema:
     def __init__(self):
@@ -40,20 +37,20 @@ class ControladorSistema:
     def inicializar_sistema(self):
         """Loop do Menu Principal do Sistema"""
         opcoes = {
-            1: self.__controlador_pacientes.abre_tela,
-            2: self.__controlador_profissionais.abre_tela,
-            3: self.__controlador_clinicas.abre_tela,
-            4: self.__controlador_atendimentos.abre_tela,
-            5: self.__controlador_relatorios.abre_tela,
+            1: self.__controlador_pacientes.abrir_tela,
+            2: self.__controlador_profissionais.abrir_tela,
+            3: self.__controlador_clinicas.abrir_tela,
+            4: self.__controlador_atendimentos.abrir_tela,
+            5: self.__controlador_relatorios.abrir_tela,
         }
-
+        
         while True:
             opcao_escolhida = self.__tela_principal.menu_opcoes()
-
+            
             if opcao_escolhida == 0:
                 print("\nEncerrando o sistema de gestão de clínicas... Até logo!")
                 break
-
+                
             funcao_controle = opcoes.get(opcao_escolhida)
             if funcao_controle:
                 funcao_controle()
